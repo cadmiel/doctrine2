@@ -1,0 +1,2 @@
+vendor/bin/doctrine orm:schema-tool:update --dump-sql => visualizar sql
+vendor/bin/doctrine orm:schema-tool:update --force => executar no banco
