@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use App\Contract\Entity;
 
 /**
  * @Entity
@@ -8,7 +9,7 @@ namespace App\Entity;
  *
  * */
 
-class Category
+class Category implements Entity
 {
 
     /**
@@ -51,6 +52,16 @@ class Category
         $this->name = $name;
         return $this;
     }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
 
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Contract\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -10,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  */
 
-class Post
+class Post implements Entity
 {
 
     /**
