@@ -8,11 +8,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity
- * @Table(name="categories")
+ * @Table(name="users")
  *
  * */
 
-class Category implements Entity
+class User implements Entity
 {
 
     /**
@@ -29,9 +29,14 @@ class Category implements Entity
      * */
     private $name;
 
+    /**
+     * @Name
+     * @Column(type="string", length=50, unique=true)
+     * */
+    private $email;
 
     /**
-     * @ManyToMany(targetEntity="App\Entity\Post",mappedBy="categories", cascade={"persist","remove"})
+     * @OneToMany(targetEntity="App\Entity\Post",cascade={"persist"}, mappedBy="user")
      */
     private $posts;
 
@@ -39,6 +44,7 @@ class Category implements Entity
     {
         $this->posts = new ArrayCollection();
     }
+
 
     /**
      * @return mixed
@@ -76,16 +82,32 @@ class Category implements Entity
         return $this;
     }
 
-    public function addPost(Post $post){
-        $this->posts->add($post);
-        $post->getCategories()->add($this);
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
         return $this;
     }
 
+    public function addPost(Post $post){
+        //$this->posts[] = $post;
+        $this->posts->add($post);
+        $post->setUser($this);
+        return $this;
+    }
     public function getPosts(){
         return $this->posts;
     }
-
-
 
 }

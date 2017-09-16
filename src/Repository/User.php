@@ -3,10 +3,10 @@
 namespace App\Repository;
 
 use App\Contract\Entity;
-use App\Entity\Category as CategoryEntity;
+use App\Entity\User as UserEntity;
 use App\Contract\Repository;
 
-class Category implements Repository
+class User implements Repository
 {
 
     private $entityManager;
@@ -15,23 +15,24 @@ class Category implements Repository
     public function __construct()
     {
         $this->entityManager = GetEntityManager();
-        $this->entityManagerRepository = $this->entityManager->getRepository(CategoryEntity::class);
+        $this->entityManagerRepository = $this->entityManager->getRepository(UserEntity::class);
     }
 
-    public function save(Entity $categoryEntity) : CategoryEntity
+    public function save(Entity $UserEntity) : UserEntity
     {
 
-        if($categoryEntity->getId() >= 1)
+        if($UserEntity->getId() >= 1)
         {
-            /* @var \App\Entity\Category $entity */
-            $entity = $this->entityManagerRepository->find($categoryEntity->getId());
-            $entity->setName($categoryEntity->getName());
+            /* @var \App\Entity\User $entity */
+            $entity = $this->entityManagerRepository->find($UserEntity->getId());
+            $entity->setName($UserEntity->getName());
+            $entity->setEmail($UserEntity->getEmail());
         }else{
-            $this->entityManager->persist($categoryEntity);
+            $this->entityManager->persist($UserEntity);
         }
         $this->entityManager->flush();
 
-        return $categoryEntity;
+        return $UserEntity;
     }
 
     public function remove(int $id) : self
@@ -41,7 +42,7 @@ class Category implements Repository
         return $this;
     }
 
-    public function getById(int $id) : CategoryEntity
+    public function getById(int $id) : UserEntity
     {
         return $this->entityManagerRepository->find($id);
     }
@@ -51,7 +52,7 @@ class Category implements Repository
         return $this->entityManagerRepository->findAll();
     }
 
-    public function getOneBy($criteria=[]) : CategoryEntity
+    public function getOneBy($criteria=[]) : UserEntity
     {
         return $this->entityManagerRepository->findOneBy($criteria);
     }

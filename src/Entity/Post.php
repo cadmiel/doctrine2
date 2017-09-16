@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity
- * @Table(name="Posts")
+ * @Table(name="posts")
  *
  */
 
@@ -35,10 +35,16 @@ class Post implements Entity
     private $context;
 
     /**
-     * @ManyToMany(targetEntity="App\Entity\Category")
+     * @ManyToMany(targetEntity="App\Entity\Category", inversedBy="posts", cascade={"persist","remove"})
      *
      */
     private $categories;
+
+
+    /**
+     * @ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -93,6 +99,7 @@ class Post implements Entity
     public function addCategory(Category $category)
     {
         $this->categories->add($category);
+        $category->getPosts()->add($this);
         return $this;
     }
 
@@ -104,6 +111,28 @@ class Post implements Entity
     {
         return $this->categories;
     }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+        return $this;
+
+    }
+
+
+//$queryBuilder = $postsRepository->createQueryBuilder('p');
+//$queryBuilder->join('p.categories', 'c')
+//->where($queryBuilder->expr()->eq('c.id', $data['search']));
+//$posts = $queryBuilder->getQuery()->getResult();
 
 
 

@@ -3,10 +3,10 @@
 namespace App\Repository;
 
 use App\Contract\Entity;
-use App\Entity\Category as CategoryEntity;
+use App\Entity\Post as PostEntity;
 use App\Contract\Repository;
 
-class Category implements Repository
+class Post implements Repository
 {
 
     private $entityManager;
@@ -15,23 +15,24 @@ class Category implements Repository
     public function __construct()
     {
         $this->entityManager = GetEntityManager();
-        $this->entityManagerRepository = $this->entityManager->getRepository(CategoryEntity::class);
+        $this->entityManagerRepository = $this->entityManager->getRepository(PostEntity::class);
     }
 
-    public function save(Entity $categoryEntity) : CategoryEntity
+    public function save(Entity $postEntity) : PostEntity
     {
 
-        if($categoryEntity->getId() >= 1)
+        if($postEntity->getId() >= 1)
         {
-            /* @var \App\Entity\Category $entity */
-            $entity = $this->entityManagerRepository->find($categoryEntity->getId());
-            $entity->setName($categoryEntity->getName());
+            /* @var \App\Entity\Post $entity */
+            $entity = $this->entityManagerRepository->find($postEntity->getId());
+            $entity->setContext($postEntity->getContext());
+            $entity->setTitle($postEntity->getTitle());
         }else{
-            $this->entityManager->persist($categoryEntity);
+            $this->entityManager->persist($postEntity);
         }
         $this->entityManager->flush();
 
-        return $categoryEntity;
+        return $postEntity;
     }
 
     public function remove(int $id) : self
@@ -41,7 +42,7 @@ class Category implements Repository
         return $this;
     }
 
-    public function getById(int $id) : CategoryEntity
+    public function getById(int $id) : PostEntity
     {
         return $this->entityManagerRepository->find($id);
     }
@@ -51,7 +52,7 @@ class Category implements Repository
         return $this->entityManagerRepository->findAll();
     }
 
-    public function getOneBy($criteria=[]) : CategoryEntity
+    public function getOneBy($criteria=[]) : PostEntity
     {
         return $this->entityManagerRepository->findOneBy($criteria);
     }

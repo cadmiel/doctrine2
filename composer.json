@@ -1,6 +1,12 @@
 {
+    "name": "Doctrine",
+    "description": "Destando doctrine 2",
+    "type": "project",
+    "homepage": "http://www.doctrine-project.org",
     "require": {
-        "doctrine/orm": "2.5.*"
+        "php": "^5.6 || ^7.0",
+        "doctrine/orm": "2.5.*",
+        "symfony/var-dumper": "^3.3"
     },
     "autoload":{
         "psr-4":{
