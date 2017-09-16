@@ -30,10 +30,11 @@ class User implements Entity
     private $name;
 
     /**
-     * @Name
+     * @Email
      * @Column(type="string", length=50, unique=true)
      * */
     private $email;
+
 
     /**
      * @OneToMany(targetEntity="App\Entity\Post",cascade={"persist"}, mappedBy="user")
