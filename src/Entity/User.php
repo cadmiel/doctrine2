@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Contract\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use \InvalidArgumentException as Argument;
 
 /**
  * @Entity
@@ -97,6 +97,9 @@ class User implements Entity
      */
     public function setEmail($email)
     {
+        if (empty($email)) {
+            throw new Argument('Empty title not allowed');
+        }
         $this->email = $email;
         return $this;
     }

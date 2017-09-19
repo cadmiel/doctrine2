@@ -6,15 +6,14 @@ use App\Contract\Entity;
 use App\Entity\Post as PostEntity;
 use App\Contract\Repository;
 
-class Post implements Repository
+class Post extends AbstractEntityManager implements Repository
 {
 
-    private $entityManager;
     private $entityManagerRepository;
 
     public function __construct()
     {
-        $this->entityManager = GetEntityManager();
+        parent::__construct();
         $this->entityManagerRepository = $this->entityManager->getRepository(PostEntity::class);
     }
 

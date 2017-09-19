@@ -5,16 +5,16 @@ namespace App\Repository;
 use App\Contract\Entity;
 use App\Entity\Category as CategoryEntity;
 use App\Contract\Repository;
+use App\EntityManager;
 
-class Category implements Repository
+class Category extends AbstractEntityManager implements Repository
 {
 
-    private $entityManager;
     private $entityManagerRepository;
 
     public function __construct()
     {
-        $this->entityManager = GetEntityManager();
+        parent::__construct();
         $this->entityManagerRepository = $this->entityManager->getRepository(CategoryEntity::class);
     }
 

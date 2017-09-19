@@ -5,16 +5,16 @@ namespace App\Repository;
 use App\Contract\Entity;
 use App\Entity\User as UserEntity;
 use App\Contract\Repository;
+use App\EntityManager;
 
-class User implements Repository
+class User extends AbstractEntityManager implements Repository
 {
 
-    private $entityManager;
     private $entityManagerRepository;
 
     public function __construct()
     {
-        $this->entityManager = GetEntityManager();
+        parent::__construct();
         $this->entityManagerRepository = $this->entityManager->getRepository(UserEntity::class);
     }
 
